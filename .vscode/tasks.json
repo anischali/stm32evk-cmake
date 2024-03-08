@@ -1,0 +1,34 @@
+{
+    "tasks": [
+        {
+            "label": "Build SAM",
+            "type": "cppbuild",
+            "command": "/usr/bin/make",
+            "args": ["-j", "$(nproc)"],
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOrder": "sequence",
+            "dependsOn":["CMake Configure"],
+        },
+        {
+            "label": "CMake Configure",
+            "type": "process",
+            "isBackground": true,
+            "command":"${workspaceRoot}/.vscode/cmake.sh",
+            "args": ["${workspaceRoot}", "${armToolchainPath}"]
+        },
+        {
+            "label": "Clean all SAM",
+            "type": "process",
+            "isBackground": true,
+            "command":"rm -rf ${workspaceRoot}/build",
+        }
+    ],
+
+    "version": "2.0.0"
+}
