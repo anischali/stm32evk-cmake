@@ -1,24 +1,5 @@
 {
-    "C_Cpp.default.intelliSenseMode": "clang-arm",
+    "C_Cpp.default.intelliSenseMode": "linux-clang-arm",
     "C_Cpp.intelliSenseEngine": "enabled",
-    "python.autoComplete.extraPaths": [
-        "${workspaceFolder}/sources/poky/bitbake/lib",
-        "${workspaceFolder}/sources/poky/meta/lib"
-    ],
-    "python.analysis.extraPaths": [
-        "${workspaceFolder}/sources/poky/bitbake/lib",
-        "${workspaceFolder}/sources/poky/meta/lib"
-    ],
-    "[python]": {
-        "diffEditor.ignoreTrimWhitespace": false,
-        "editor.formatOnType": true,
-        "editor.wordBasedSuggestions": "off",
-        "files.trimTrailingWhitespace": false
-    },
-    "[shellscript]": {
-        "files.eol": "\n",
-        "files.trimTrailingWhitespace": false
-    },
-    
-
+    "C_Cpp.autocomplete": "default",
 }

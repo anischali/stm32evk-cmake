@@ -34,4 +34,10 @@ add_custom_command(
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Generate .bin extension file firmware")
 
+add_custom_command(
+        TARGET ${STM32_PROJECT_NAME}.elf 
+        COMMAND echo "binary_elf=${STM32_PROJECT_NAME}.elf" > build.env && echo "jlink_device=${STM32_JLINK_DEVICE}" >> build.env
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generate build.env for debugging")
+
 SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS)

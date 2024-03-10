@@ -2,9 +2,9 @@
     "tasks": [
         {
             "label": "Build STM32",
-            "type": "cppbuild",
+            "type": "process",
             "command": "/usr/bin/make",
-            "args": ["-j", "$(nproc)"],
+            "args": ["-j", "8"],
             "options": {
                 "cwd": "${workspaceRoot}/build"
             },
@@ -13,19 +13,26 @@
                 "isDefault": true
             },
             "dependsOrder": "sequence",
-            "dependsOn":["CMake Configure"],
+            "dependsOn":["CMake Configure", "Clean STM32"],
+        },
+        {
+            "label": "Clean STM32",
+            "type": "process",
+            "command": "/usr/bin/make",
+            "args": ["-j", "8", "clean"],
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
         },
         {
             "label": "CMake Configure",
             "type": "process",
-            "isBackground": true,
             "command":"${workspaceRoot}/.vscode/cmake.sh",
-            "args": ["${workspaceRoot}", "${armToolchainPath}"]
+            "args": ["${workspaceRoot}", "${armToolchainPath}"],
         },
         {
             "label": "Clean all STM32",
             "type": "process",
-            "isBackground": true,
             "command":"rm -rf ${workspaceRoot}/build",
         }
     ],

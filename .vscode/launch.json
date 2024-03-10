@@ -7,17 +7,18 @@
         {
             "name": "Run STM32",
             "cwd": "${workspaceFolder}",
-            "executable": "${workspaceFolder}/build/stm32evk.elf",
+            "executable": "${workspaceFolder}/build/${env:binary_elf}", //"${workspaceFolder}/build/${env:STM32_PROJECT_NAME}.elf"
             "request": "launch",
             "type": "cortex-debug",
             "runToEntryPoint": "main",
             "servertype": "jlink",
             "serverpath": "/opt/SEGGER/JLink/JLinkGDBServerCLExe",
-            "device": "STM32F030K6",
+            "device": "${env:jlink_device}",
             "interface": "swd",
             "serialNumber": "601001681", //If you have more than one J-Link probe, add the serial number here.
             "armToolchainPath": "/opt/gcc-arm-none-eabi/gcc-arm-none-eabi-10.3-2021.10/bin",
             "preLaunchTask": "Build STM32",
+            "showDevDebugOutput": "raw",
         }
     ]
 }
