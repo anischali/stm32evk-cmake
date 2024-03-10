@@ -1,7 +1,7 @@
 {
     "tasks": [
         {
-            "label": "Build SAM",
+            "label": "Build STM32",
             "type": "cppbuild",
             "command": "/usr/bin/make",
             "args": ["-j", "$(nproc)"],
@@ -23,7 +23,7 @@
             "args": ["${workspaceRoot}", "${armToolchainPath}"]
         },
         {
-            "label": "Clean all SAM",
+            "label": "Clean all STM32",
             "type": "process",
             "isBackground": true,
             "command":"rm -rf ${workspaceRoot}/build",
