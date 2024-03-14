@@ -100,18 +100,28 @@ int main(void)
   MX_ADC_Init();
   MX_TIM1_Init();
   MX_SPI1_Init();
+
+    TIM1->CCR1 = TIM1->CCR2 = TIM1->CCR3 = 16383;
+
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
+
+    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
+
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
-
+    const uint8_t msg[] = "hello world !!!";
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  const char msg[] = "hello STM32 vscode\n\r";
   while (1)
   {
 	  HAL_Delay(1000);
 
-	  HAL_UART_Transmit(&huart1, msg, sizeof(msg), 1000);
+    HAL_UART_Transmit(&huart1, msg, sizeof(msg), 100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -254,6 +264,14 @@ static void MX_ADC_Init(void)
   {
     Error_Handler();
   }
+
+  /** Configure for the selected ADC regular channel to be converted.
+  */
+  sConfig.Channel = ADC_CHANNEL_6;
+  if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN ADC_Init 2 */
 
   /* USER CODE END ADC_Init 2 */
@@ -341,17 +359,14 @@ static void MX_TIM1_Init(void)
   {
     Error_Handler();
   }
-  sSlaveConfig.SlaveMode = TIM_SLAVEMODE_GATED;
-  sSlaveConfig.InputTrigger = TIM_TS_ETRF;
-  sSlaveConfig.TriggerPolarity = TIM_TRIGGERPOLARITY_NONINVERTED;
-  sSlaveConfig.TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1;
-  sSlaveConfig.TriggerFilter = 0;
+  sSlaveConfig.SlaveMode = TIM_SLAVEMODE_RESET;
+  sSlaveConfig.InputTrigger = TIM_TS_ITR0;
   if (HAL_TIM_SlaveConfigSynchro(&htim1, &sSlaveConfig) != HAL_OK)
   {
     Error_Handler();
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_ENABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
@@ -450,8 +465,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA11 */
-  GPIO_InitStruct.Pin = GPIO_PIN_11;
+  /*Configure GPIO pins : PA11 PA12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
