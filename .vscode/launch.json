@@ -5,19 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run STM32",
+            "name": "JLink Debug",
             "cwd": "${workspaceFolder}",
-            "executable": "${workspaceFolder}/build/${env:binary_elf}", //"${workspaceFolder}/build/${env:STM32_PROJECT_NAME}.elf"
+            "executable": "${workspaceFolder}/${env:FIRMWARE_ELF_PATH}",
             "request": "launch",
             "type": "cortex-debug",
             "runToEntryPoint": "main",
             "servertype": "jlink",
-            "serverpath": "/opt/SEGGER/JLink/JLinkGDBServerCLExe",
-            "device": "${env:jlink_device}",
+            "serverpath": "JLinkGDBServerCLExe",
+            "device": "${env:JLINK_DEVICE_ID}",//"STM32F030K6",
             "interface": "swd",
-            "serialNumber": "601001681", //If you have more than one J-Link probe, add the serial number here.
-            "armToolchainPath": "/opt/gcc-arm-none-eabi/gcc-arm-none-eabi-10.3-2021.10/bin",
-            "preLaunchTask": "Build STM32",
+            "preLaunchTask": "build",
+            "showDevDebugOutput": "raw",
+        },
+        {
+            "name": "JLink Debug (attach)",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/${env:FIRMWARE_ELF_PATH}",
+            "request": "attach",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "jlink",
+            "serverpath": "JLinkGDBServerCLExe",
+            "device": "${env:JLINK_DEVICE_ID}",
+            "interface": "swd",
+            "preLaunchTask": "build",
             "showDevDebugOutput": "raw",
         }
     ]

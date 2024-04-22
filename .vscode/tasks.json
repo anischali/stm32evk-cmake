@@ -1,9 +1,9 @@
 {
     "tasks": [
         {
-            "label": "Build STM32",
+            "label": "build",
             "type": "process",
-            "command": "/usr/bin/make",
+            "command": "make",
             "args": ["-j", "8"],
             "options": {
                 "cwd": "${workspaceRoot}/build"
@@ -13,29 +13,44 @@
                 "isDefault": true
             },
             "dependsOrder": "sequence",
-            "dependsOn":["CMake Configure", "Clean STM32"],
+            "dependsOn":["configure", "clean"],
         },
         {
-            "label": "Clean STM32",
+            "label": "clean",
             "type": "process",
-            "command": "/usr/bin/make",
+            "command": "make",
             "args": ["-j", "8", "clean"],
             "options": {
                 "cwd": "${workspaceRoot}/build"
             },
         },
         {
-            "label": "CMake Configure",
+            "label": "configure",
             "type": "process",
             "command":"${workspaceRoot}/.vscode/cmake.sh",
             "args": ["${workspaceRoot}", "${armToolchainPath}"],
         },
         {
-            "label": "Clean all STM32",
+            "label": "clean all",
             "type": "process",
             "command":"rm -rf ${workspaceRoot}/build",
+        },
+        {
+            "label": "loadenv",
+            "type": "process",
+            "args": [ "${workspaceRoot}" ],
+            "isBackground": true,
+            "hide": true,
+            "linux":{
+                "command": "${workspaceRoot}/.vscode/loadenv.sh",
+            },
+            "windows": {
+                "command": "echo"
+            },
+            "runOptions": {
+                "runOn": "folderOpen",
+            }
         }
     ],
-
     "version": "2.0.0"
 }
