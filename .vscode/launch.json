@@ -26,7 +26,7 @@
             "type": "cortex-debug",
             "runToEntryPoint": "main",
             "servertype": "openocd",
-            "configFiles": ["/usr/share/openocd/scripts/interface/stlink-v2.cfg", "/usr/share/openocd/scripts/target/stm32f0x.cfg"],
+            "configFiles": ["${workspaceFolder}/configs/stlink.cfg", "${workspaceFolder}/configs/stm32f0x.cfg"],
             "device": "STM32F030K6",
             "interface": "swd",            
             "preLaunchTask": "build",
